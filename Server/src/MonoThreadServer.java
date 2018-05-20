@@ -13,7 +13,7 @@ public class MonoThreadServer implements Runnable {
 
     @Override
     public void run() {
-
+        System.out.println("Name = " + Thread.currentThread().getName());
         try {
             // инициируем каналы общения в сокете, для сервера
 

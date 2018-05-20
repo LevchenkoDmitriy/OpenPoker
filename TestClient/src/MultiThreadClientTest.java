@@ -16,7 +16,7 @@ public class MultiThreadClientTest {
         // стартуем цикл в котором с паузой в 10 милисекунд стартуем Runnable
         // клиентов,
         // которые пишут какое-то количество сообщений
-        while (j < 1) {
+        while (j < 8) {
             j++;
             exec.execute(new Client());
             Thread.sleep(10);

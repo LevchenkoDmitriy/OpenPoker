@@ -22,6 +22,7 @@ public class Client implements Runnable {
     @Override
     public void run() {
 
+
         try (
 
                 // создаём объект для записи строк в созданный скокет, для
@@ -32,12 +33,13 @@ public class Client implements Runnable {
             System.out.println("Client oos & ois initialized");
 
             int i = 0;
+
             // создаём рабочий цикл
-            while (i < 5) {
+            while (true) {
 
                 // пишем сообщение автогенерируемое циклом клиента в канал
                 // сокета для сервера
-                oos.writeUTF("clientCommand " + i);
+                oos.writeUTF("call " + i);
 
                 // проталкиваем сообщение из буфера сетевых сообщений в канал
                 oos.flush();
