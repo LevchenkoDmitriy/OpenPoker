@@ -9,4 +9,6 @@ public class ServerStatus {
         players--;
     }
 
+    public int getPlayers(){ return players;}
+
 }

@@ -14,7 +14,5 @@ public class Player {
     public Player(){
         name = "Player";
         balance = 1000;
-        Cards[1] = null;
-        Cards[2] = null;
     }
 }

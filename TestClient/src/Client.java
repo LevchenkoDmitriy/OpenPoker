@@ -2,10 +2,11 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Client implements Runnable {
 
-    static Socket socket;
+    private static Socket socket;
 
     public Client() {
         try {
@@ -21,47 +22,29 @@ public class Client implements Runnable {
 
     @Override
     public void run() {
-
-
         try (
+                Scanner consoleInput = new Scanner(System.in);
 
-                // создаём объект для записи строк в созданный скокет, для
-                // чтения строк из сокета
-                // в try-with-resources стиле
-                DataOutputStream oos = new DataOutputStream(socket.getOutputStream());
-                DataInputStream ois = new DataInputStream(socket.getInputStream())) {
-            System.out.println("Client oos & ois initialized");
+                // создаём объект для записи и чтения строк из сокета
+                DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+                DataInputStream in = new DataInputStream(socket.getInputStream())) {
+             System.out.println("Client oos & ois initialized");
 
-            int i = 0;
 
-            // создаём рабочий цикл
-            while (true) {
-
-                // пишем сообщение автогенерируемое циклом клиента в канал
-                // сокета для сервера
-                oos.writeUTF("call " + i);
-
-                // проталкиваем сообщение из буфера сетевых сообщений в канал
-                oos.flush();
-
-                // ждём чтобы сервер успел прочесть сообщение из сокета и
-                // ответить
-                Thread.sleep(10);
-                System.out.println("Client wrote & start waiting for data from server...");
-
-                // забираем ответ из канала сервера в сокете
-                // клиента и сохраняем её в ois переменную, печатаем на
-                // консоль
-                System.out.println("reading...");
-                String in = ois.readUTF();
-                System.out.println(in);
-                i++;
-                Thread.sleep(5000);
+            //Приветствие и ввод никнейма
+            System.out.println(in.readUTF());
+            Thread.sleep(20);
+            out.writeUTF(consoleInput.next());
+            System.out.println(in.readUTF());
+            Thread.sleep(20);
+            while(true){
 
             }
+
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (InterruptedException e) {
+        }
+        catch (InterruptedException e){
             e.printStackTrace();
         }
     }

@@ -13,59 +13,36 @@ public class MonoThreadServer implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("Name = " + Thread.currentThread().getName());
+
         try {
-            // инициируем каналы общения в сокете, для сервера
-
-            // канал записи в сокет следует инициализировать сначала канал чтения для избежания блокировки выполнения программы на ожидании заголовка в сокете
+            // Инициализируем каналы для записи/чтения
             DataOutputStream out = new DataOutputStream(clientDialog.getOutputStream());
-
-// канал чтения из сокета
             DataInputStream in = new DataInputStream(clientDialog.getInputStream());
             System.out.println("DataInputStream created");
-
             System.out.println("DataOutputStream  created");
 
             // начинаем диалог с подключенным клиентом в цикле, пока сокет не
             // закрыт клиентом
-            while (!clientDialog.isClosed()) {
-                System.out.println("Server reading from channel");
 
-                // серверная нить ждёт в канале чтения (inputstream) получения
-                // данных клиента после получения данных считывает их
-                String entry = in.readUTF();
-
-                // и выводит в консоль
-                System.out.println("READ from clientDialog message - " + entry);
-
-                // инициализация проверки условия продолжения работы с клиентом
-                // по этому сокету по кодовому слову - quit в любом регистре
-                if (entry.equalsIgnoreCase("quit")) {
-
-                    // если кодовое слово получено то инициализируется закрытие
-                    // серверной нити
-                    System.out.println("Client initialize connections suicide ...");
-                    out.writeUTF("Server reply - " + entry + " - OK");
-                    Thread.sleep(3000);
+            //Приветствие и ожидание ника
+            out.writeUTF("Hello! Please enter your name");
+            Player player = new Player();
+            while (true) {
+                String str = "0x0";
+                str = in.readUTF();
+                if (!str.equals("0x0")) {
+                    player.setName(str);
+                    out.writeUTF("Hello " + player.getName());
                     break;
                 }
+            }
+            System.out.println("Player " + player.getName() + " is connected");
 
-                // если условие окончания работы не верно - продолжаем работу -
-                // отправляем эхо обратно клиенту
-
-                System.out.println("Server try writing to channel");
-                out.writeUTF("Server reply - " + entry + " - OK");
-                System.out.println("Server Wrote message to clientDialog.");
-
+            while (!clientDialog.isClosed()) {
                 // освобождаем буфер сетевых сообщений
                 out.flush();
 
-                // возвращаемся в началло для считывания нового сообщения
             }
-
-            // если условие выхода - верно выключаем соединения
-            System.out.println("Client disconnected");
-            System.out.println("Closing connections & channels.");
 
             // закрываем сначала каналы сокета !
             in.close();
@@ -74,10 +51,7 @@ public class MonoThreadServer implements Runnable {
             // потом закрываем сокет общения с клиентом в нити моносервера
             clientDialog.close();
 
-            System.out.println("Closing connections & channels - DONE.");
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
