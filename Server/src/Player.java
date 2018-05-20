@@ -1,5 +1,20 @@
 public class Player {
-    boolean isActive;
+    private String name;
+    private int balance;
+    private CardDeck.Card[] Cards = new CardDeck.Card[2];// 2 карты у каждого игрока
 
-    int balance;
+    public void setName(String str){
+        name = str;
+    }
+
+    public int getBalance(){ return balance; }
+    public String getName(){ return name; }
+    public CardDeck.Card[] getCards(){ return Cards; }
+
+    public Player(){
+        name = "Player";
+        balance = 1000;
+        Cards[1] = null;
+        Cards[2] = null;
+    }
 }
