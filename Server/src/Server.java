@@ -3,14 +3,20 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Server{
     public static ServerStatus Status = new ServerStatus();
+
+    public static Map<String, Player> ClientMap = new HashMap<String, Player>(8);
+
     private static ExecutorService executeIt = Executors.newFixedThreadPool(8);
 
     public static void main(String[] args) {
+
         // стартуем сервер на порту 3345 и инициализируем переменную для обработки консольных команд с самого сервера
         try (ServerSocket server = new ServerSocket(3345);
              BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
@@ -23,17 +29,14 @@ public class Server{
                 //Принимаем подключение
                 Socket client = server.accept();
 
-                //Увеличиваем число игроков и закидываем в map
-                Status.increasePlayers();
-                System.out.println(Status.getPlayers());
-
                 //Запускаем нить с отдельным клиентом
                 executeIt.execute(new MonoThreadServer(client));
 
                 //Если игроков больше двух и игра не запущена, то стартуем игру
                 if((Status.getPlayers() >= 2) && !Status.isGameStarted){
                     Status.isGameStarted = true;
-                    executeIt.execute(new GameLoop(Status.ClientMap));
+                    executeIt.execute(new GameLoop(ClientMap));
+                    System.out.println("Game started");
                 }
                 System.out.println("Connection accepted.");
             }

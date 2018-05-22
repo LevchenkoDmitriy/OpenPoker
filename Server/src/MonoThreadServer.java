@@ -24,26 +24,26 @@ public class MonoThreadServer implements Runnable {
             out.writeUTF("connected");
             Player player = new Player();
 
-            while (true) {
-                String str;
-                str = in.readUTF();
-                if (Server.Status.ClientMap.get(str) == null) {
-                    if (!str.equals("")) {
-                        player.setName(str);
-                        break;
-                    }
-                }else{
-                    out.writeUTF("Nickname has already used");
-                    clientDialog.close();
+            String str;
+            str = in.readUTF();
 
-                }
+            if(Server.ClientMap.containsKey(str)) {
+                out.writeUTF("Nickname has already used");
+                clientDialog.close();
+                Thread.currentThread().interrupt();
+                System.out.println("The client used an already occupied nickname");
+            }else{
+                player.setName(str);
+                System.out.println("Player " + player.getName() + " has connected");
+                out.writeUTF("connected");
+                //Увеличиваем число игроков
+                Server.Status.increasePlayers();
             }
 
             //Добавляем сокет игроку и закидываем его во множество всех игроков. Теперь у нас есть пара ник <-> сокет
             player.PlayerSocket = clientDialog;
-            Server.Status.ClientMap.put(player.getName(), player);
+            Server.ClientMap.put(player.getName(), player);
 
-            System.out.println("Player " + player.getName() + " is connected");
 
             while (!clientDialog.isClosed()) {
                 // освобождаем буфер сетевых сообщений

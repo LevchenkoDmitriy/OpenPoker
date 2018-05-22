@@ -1,4 +1,3 @@
-import java.util.HashMap;
 import java.util.Map;
 
 public class ServerStatus {
@@ -16,6 +15,4 @@ public class ServerStatus {
     public int getPlayers() {
         return players;
     }
-
-    public Map<String, Player> ClientMap;
 }
