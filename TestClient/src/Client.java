@@ -30,7 +30,6 @@ public class Client implements Runnable {
                 DataInputStream in = new DataInputStream(socket.getInputStream())) {
              System.out.println("Client oos & ois initialized");
 
-
             //Приветствие и ввод никнейма
             System.out.println(in.readUTF());
             Thread.sleep(20);

@@ -6,6 +6,10 @@ public class CardDeck {
         int dignity; // Достоинство 1-9 - 2-10, J - 10, Q - 11, K - 12, A - 13
     }
 
+    public class CardOnBoard{
+
+    }
+
     // Пишем свой стек для карт
     private class CardStack {
         private Card[] Deck = new Card[52];
