@@ -10,7 +10,6 @@ public class MonoThreadServer implements Runnable {
     MonoThreadServer(Socket client) {
         MonoThreadServer.clientDialog = client;
     }
-
     @Override
     public void run() {
         try {
@@ -36,8 +35,6 @@ public class MonoThreadServer implements Runnable {
                 player.setName(str);
                 System.out.println("Player " + player.getName() + " has connected");
                 out.writeUTF("connected");
-                //Увеличиваем число игроков
-                Server.Status.increasePlayers();
             }
 
             //Добавляем сокет игроку и закидываем его во множество всех игроков. Теперь у нас есть пара ник <-> сокет

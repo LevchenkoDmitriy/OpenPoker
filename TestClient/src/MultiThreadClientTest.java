@@ -11,9 +11,7 @@ public class MultiThreadClientTest {
         ExecutorService exec = Executors.newFixedThreadPool(8);
         int j = 0;
 
-        // стартуем цикл в котором с паузой в 10 милисекунд стартуем Runnable
-        // клиентов,
-        // которые пишут какое-то количество сообщений
+        // стартуем цикл в котором с паузой в 10 милисекунд стартуем Runnable клиентов
         while (j < 1) {
             j++;
             exec.execute(new Client());

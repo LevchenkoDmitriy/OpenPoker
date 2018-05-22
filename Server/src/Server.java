@@ -32,6 +32,9 @@ public class Server{
                 //Запускаем нить с отдельным клиентом
                 executeIt.execute(new MonoThreadServer(client));
 
+                //Увеличиваем число игроков
+                Server.Status.increasePlayers();
+
                 //Если игроков больше двух и игра не запущена, то стартуем игру
                 if((Status.getPlayers() >= 2) && !Status.isGameStarted){
                     Status.isGameStarted = true;

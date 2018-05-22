@@ -6,9 +6,8 @@ public class CardDeck {
         int dignity; // Достоинство 2-10 - 2-10, J - 11, Q - 12, K - 13, A - 14
     }
 
-    public class CardOnBoard{
-
-    }
+    //Карты на стол
+    public Card[] boardCards = new Card[5];
 
     // Пишем свой стек для карт
     private class CardStack {
@@ -42,14 +41,14 @@ public class CardDeck {
 
     private CardStack Deck = new CardStack();
 
-    public CardStack newDeck(){ // Генерация новой колоды
+    public void newDeck(){ // Генерация новой колоды
         //Очищаем колоду
         while(!Deck.isEmpty()){
             Deck.pop();
         }
 
         for (int i = 1; i <= 4; i++){
-            for(int j = 1; j <= 13; j++){
+            for(int j = 2; j <= 14; j++){
                 Card card = new Card();
                 card.suit = i;
                 card.dignity = j;
@@ -58,7 +57,6 @@ public class CardDeck {
             }
         }
         Deck.shuffle(); // Перемешиваем колоду
-        return Deck;
     }
 
     public Card popCard(){

@@ -13,6 +13,10 @@ public class Player {
     public int getBalance(){ return balance; }
     public String getName(){ return name; }
     public CardDeck.Card[] getCards(){ return Cards; }
+    public void setCards(CardDeck.Card[] playerCards){
+        Cards[0] = playerCards[0];
+        Cards[1] = playerCards[1];
+    }
 
     public Player(){
         name = "Player";
