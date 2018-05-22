@@ -7,13 +7,12 @@ public class MonoThreadServer implements Runnable {
 
     private static Socket clientDialog;
 
-    public MonoThreadServer(Socket client) {
+    MonoThreadServer(Socket client) {
         MonoThreadServer.clientDialog = client;
     }
 
     @Override
     public void run() {
-
         try {
             // Инициализируем каналы для записи/чтения
             DataOutputStream out = new DataOutputStream(clientDialog.getOutputStream());
@@ -21,21 +20,29 @@ public class MonoThreadServer implements Runnable {
             System.out.println("DataInputStream created");
             System.out.println("DataOutputStream  created");
 
-            // начинаем диалог с подключенным клиентом в цикле, пока сокет не
-            // закрыт клиентом
-
             //Приветствие и ожидание ника
-            out.writeUTF("Hello! Please enter your name");
+            out.writeUTF("connected");
             Player player = new Player();
+
             while (true) {
-                String str = "0x0";
+                String str;
                 str = in.readUTF();
-                if (!str.equals("0x0")) {
-                    player.setName(str);
-                    out.writeUTF("Hello " + player.getName());
-                    break;
+                if (Server.Status.ClientMap.get(str) == null) {
+                    if (!str.equals("")) {
+                        player.setName(str);
+                        break;
+                    }
+                }else{
+                    out.writeUTF("Nickname has already used");
+                    clientDialog.close();
+
                 }
             }
+
+            //Добавляем сокет игроку и закидываем его во множество всех игроков. Теперь у нас есть пара ник <-> сокет
+            player.PlayerSocket = clientDialog;
+            Server.Status.ClientMap.put(player.getName(), player);
+
             System.out.println("Player " + player.getName() + " is connected");
 
             while (!clientDialog.isClosed()) {

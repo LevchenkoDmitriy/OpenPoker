@@ -1,7 +1,10 @@
+import java.net.Socket;
+
 public class Player {
     private String name;
     private int balance;
     private CardDeck.Card[] Cards = new CardDeck.Card[2];// 2 карты у каждого игрока
+    public Socket PlayerSocket;
 
     public void setName(String str){
         name = str;

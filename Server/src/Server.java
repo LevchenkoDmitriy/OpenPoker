@@ -5,8 +5,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-public class Server{
 
+public class Server{
+    public static ServerStatus Status = new ServerStatus();
     private static ExecutorService executeIt = Executors.newFixedThreadPool(8);
 
     public static void main(String[] args) {
@@ -15,7 +16,6 @@ public class Server{
              BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
 
             System.out.println("Server socket created");
-            ServerStatus Status = new ServerStatus();
 
             // стартуем цикл при условии что серверный сокет не закрыт
             while (!server.isClosed()) {
@@ -26,9 +26,6 @@ public class Server{
                 //Увеличиваем число игроков и закидываем в map
                 Status.increasePlayers();
                 System.out.println(Status.getPlayers());
-                Status.ClientMap.put(Status.getPlayers(), client);
-
-                System.out.println(Status.ClientMap.get(1));
 
                 //Запускаем нить с отдельным клиентом
                 executeIt.execute(new MonoThreadServer(client));

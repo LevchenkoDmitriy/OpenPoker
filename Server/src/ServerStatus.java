@@ -1,4 +1,3 @@
-import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,5 +17,5 @@ public class ServerStatus {
         return players;
     }
 
-    public Map<Integer, Socket> ClientMap = new HashMap(8);
+    public Map<String, Player> ClientMap;
 }
