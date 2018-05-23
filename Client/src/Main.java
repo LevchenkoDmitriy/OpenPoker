@@ -13,7 +13,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Open Pocker");
 
-        Scene scene = new Scene(root,600,400);
+        Scene scene = new Scene(root,1280,720);
 
         primaryStage.setScene(scene);
         primaryStage.show();
