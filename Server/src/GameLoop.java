@@ -8,7 +8,7 @@ import com.google.gson.*;
 
 public class GameLoop implements Runnable {
     //Создаём множество пользователей, из них формируем игру
-    private Map<String, Player> UserMap;
+    public static Map<String, Player> UserMap;
 
     GameLoop(Map<String, Player> Map) {
         UserMap = Map;
@@ -64,10 +64,16 @@ public class GameLoop implements Runnable {
                     //Говорим игроку, что его ход и ждём действие в течение 30с
                     out.writeUTF("your turn");
 
-                    //Ожидаем комнады и обрабатываем их
-                    String Command = in.readUTF();
+                    //Ожидаем комнады и читаем
+                    String Command;
+                    Command = in.readUTF();
 
+                    //Обработка комманд
                     CommandHandler.catchCommand(Command, player);
+
+                    //"Приклеиваем" ник к команде и отправляем всем
+                    Command = Command + ":" + player.getName();
+                    sendToAll(UserMap,Command);
 
                 } catch (IOException e) {
                     e.getStackTrace();
