@@ -8,6 +8,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.awt.event.MouseEvent;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
@@ -15,6 +17,9 @@ import java.net.Socket;
 import static java.lang.Integer.parseInt;
 
 public class Controller {
+
+    private Socket socket;
+
     @FXML
     private TextField usr_name;
     @FXML
@@ -23,6 +28,8 @@ public class Controller {
     private TextField port;
 
     private String portstr;
+
+    private String gotin, sendout;
 
     @FXML
     private void initialize() {
@@ -41,6 +48,24 @@ public class Controller {
             return;
         }
 
+        try {
+            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+            DataInputStream in = new DataInputStream(socket.getInputStream());
+
+            gotin = in.readUTF();
+            if (gotin.equals("connected")){
+                out.writeUTF(usr_name.getText());
+                gotin = in.readUTF();
+                if (! gotin.equals("connected")){
+                    usr_name.setText(gotin);
+                }
+            }
+        }
+        catch (IOException e){
+            e.getStackTrace();
+        }
+
+
 
         Parent SecondSceneParent = null;
         try {
@@ -55,6 +80,9 @@ public class Controller {
         Stage window = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
         window.setScene(SecondScene);
         window.show();
+
+
+
 
     }
 
@@ -74,7 +102,7 @@ public class Controller {
         try {
 
             // создаём сокет общения на стороне клиента в конструкторе объекта
-            Socket socket = new Socket(IP, parseInt(port));
+            socket = new Socket(IP, parseInt(port));
             Thread.sleep(2000);
         } catch (Exception e) {
           return false  ;
