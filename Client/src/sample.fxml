@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="600.0" layoutX="14.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../../../Downloads/logo.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="play" layoutX="263.0" layoutY="290.0" mnemonicParsing="false" onMouseClicked="#play_poc" text="Connect" />
+      <Button fx:id="exit" layoutX="275.0" layoutY="330.0" mnemonicParsing="false" onMouseClicked="#exit" text="Exit" />
+      <Label layoutX="230.0" layoutY="58.0" text="Open Pocker">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <TextField layoutX="218.0" layoutY="144.0" />
+      <TextField layoutX="221.0" layoutY="200.0" />
+      <TextField layoutX="218.0" layoutY="256.0" />
+      <Label layoutX="263.0" layoutY="114.0" text="User Name:" />
+      <Label layoutX="261.0" layoutY="183.0" prefHeight="17.0" prefWidth="69.0" text="IP address:" />
+      <Label layoutX="279.0" layoutY="232.0" text="Port" />
+   </children>
+</AnchorPane>
