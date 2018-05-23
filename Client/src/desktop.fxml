@@ -20,7 +20,7 @@
                           <children>
                               <ImageView layoutX="-52.0" layoutY="-35.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <image>
-                              <Image url="pics/0_0.png" />
+                              <Image url="@pics/0_0.png" />
                            </image>
                         </ImageView>
                           </children>
