@@ -20,14 +20,17 @@
                           <children>
                               <ImageView layoutX="-52.0" layoutY="-35.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <image>
-                              <Image url="pics/0_0.png" />
+                              <Image url="@pics/0_0.png" />
                            </image>
                         </ImageView>
                           </children>
                       </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                           <children>
-                              <ImageView layoutX="-46.0" layoutY="-21.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView layoutX="-46.0" layoutY="-21.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@pics/0_0.png" />
+                           </image></ImageView>
                           </children>
                       </AnchorPane>
                   </items>
