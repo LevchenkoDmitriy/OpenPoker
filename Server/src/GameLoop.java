@@ -13,7 +13,7 @@ public class GameLoop implements Runnable {
         UserMap = Map;
     }
 
-    Gson gson = new GsonBuilder()
+    private Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .create();
 
@@ -27,10 +27,13 @@ public class GameLoop implements Runnable {
         CardDeck Cards = new CardDeck();
         Cards.newDeck();
 
+        String users = "";
         //Раздаём каждому по 2 карты
         for (Map.Entry<String, Player> entry : UserMap.entrySet()) {
-            String key = entry.getKey();
             Player player = entry.getValue();
+
+            //Записываем всех пользователей по правилу nickname:balance
+            users = users + player.getName() + ":" + player.getBalance() + "\n";
 
             //Вытаскиваем 2 карты
             CardDeck.Card[] userCards = new CardDeck.Card[2];
@@ -47,14 +50,16 @@ public class GameLoop implements Runnable {
             UserMap.replace(player.getName(), player);
         }
 
+        //Рассылаем всем пользователям
+        sendToAll(UserMap, users);
+
         //Раздаём карты на стол
         for(int i = 0; i < 5; i++){
             Cards.boardCards[i] = Cards.popCard();
         }
+
         //Генерируем JSON и отправляем всем игрокам
         sendToAll(UserMap, gson.toJson(Cards.boardCards));
-
-
 
         /* Стартуем игру. 3 раунда */
         for (int Rounds = 1; Rounds <= 3; Rounds++) {
@@ -69,6 +74,9 @@ public class GameLoop implements Runnable {
 
                         //Говорим игроку, что его ход и ждём действие в течение 30с
                         out.writeUTF("your turn");
+
+                        //Ожидаем комнады от игрока
+                        String Command = in.readUTF();
 
                     } catch (IOException e) {
                         e.getStackTrace();
