@@ -28,7 +28,14 @@ public class GameLoop implements Runnable {
         String str = "game started";
         sendToAll(UserMap, str);
 
-        //TODO Выбор дилера
+        //Перемещение фишки дилера на следующий раунд
+        for(Map.Entry<String, Player> entry : UserMap.entrySet()){
+            if(entry.getValue().isDealer()){
+                UserMap.get(entry.getKey()).setDealer(false);
+                String name = getNextKey(entry.getKey(), UserMap);
+                Server.ClientMap.get(name).setDealer(true);
+            }
+        }
 
         //Обнуляем банк перед игрой
         Server.Status.setBank(0);
@@ -67,6 +74,8 @@ public class GameLoop implements Runnable {
                 }
             }
         }
+
+        Server.Status.isGameStarted = false;
     }
 
     //Отправка JSON сразу всем пользователям
