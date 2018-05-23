@@ -41,6 +41,10 @@ public class MonoThreadServer implements Runnable {
             player.PlayerSocket = clientDialog;
             Server.ClientMap.put(player.getName(), player);
 
+            if(Server.Status.getPlayers() == 1){
+                player.setDealer(true);
+            }
+
 
             while (!clientDialog.isClosed()) {
                 // освобождаем буфер сетевых сообщений
@@ -54,6 +58,7 @@ public class MonoThreadServer implements Runnable {
 
             // потом закрываем сокет общения с клиентом в нити моносервера
             clientDialog.close();
+            Server.Status.decreasePlayers();
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -8,6 +8,7 @@ public class CommandHandler {
             Disconnect(player);
         }
 
+        //TODO
        // if(Command.equals())
     }
 
@@ -17,6 +18,7 @@ public class CommandHandler {
             //Отсоединяем клиент и удаляем его из списка клиентов
             player.PlayerSocket.close();
             Server.ClientMap.remove(player.getName());
+            Server.Status.decreasePlayers();
         } catch (IOException e) {
             e.printStackTrace();
         }
