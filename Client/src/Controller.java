@@ -30,13 +30,15 @@ public class Controller {
 
 
     public void play_poc(javafx.scene.input.MouseEvent mouseEvent) {
+        //проверка правильности порта
         portstr = port.getText();
         if(!(isNumber(portstr))){
          port.setText("it is n't number");
          return;
         }
 
-        if (!(connecter(usr_name.getText(),ip.getText(),port.getText()))){
+        //подключение к серверу
+        if (!(connecter(usr_name.getText(),ip.getText(),portstr))){
             ip.setText("can not connect");
             return;
         }
