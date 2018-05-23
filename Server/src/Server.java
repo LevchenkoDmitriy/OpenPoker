@@ -37,6 +37,7 @@ public class Server{
 
                 //Если игроков больше двух и игра не запущена, то стартуем игру
                 if((Status.getPlayers() >= 2) && !Status.isGameStarted){
+
                     Status.isGameStarted = true;
                     executeIt.execute(new GameLoop(ClientMap));
                     System.out.println("Game started");
@@ -51,3 +52,4 @@ public class Server{
         }
     }
 }
+

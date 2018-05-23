@@ -1,8 +1,9 @@
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.Socket;
 import java.util.Map;
+import java.util.Map.Entry;
+
 import com.google.gson.*;
 
 public class GameLoop implements Runnable {
@@ -27,7 +28,14 @@ public class GameLoop implements Runnable {
         String str = "game started";
         sendToAll(UserMap, str);
 
-        //TODO Выбор дилера
+        //Перемещение фишки дилера на следующий раунд
+        for(Map.Entry<String, Player> entry : UserMap.entrySet()){
+            if(entry.getValue().isDealer()){
+                UserMap.get(entry.getKey()).setDealer(false);
+                String name = getNextKey(entry.getKey(), UserMap);
+                Server.ClientMap.get(name).setDealer(true);
+            }
+        }
 
         //Обнуляем банк перед игрой
         Server.Status.setBank(0);
@@ -66,6 +74,8 @@ public class GameLoop implements Runnable {
                 }
             }
         }
+
+        Server.Status.isGameStarted = false;
     }
 
     //Отправка JSON сразу всем пользователям
@@ -178,5 +188,22 @@ public class GameLoop implements Runnable {
 
         //Генерируем JSON и отправляем всем игрокам
         sendToAll(UserMap, gson.toJson(Cards.boardCards));
+    }
+
+    //Вспомогательные функции, получение первого и следущего за элементом ключа
+    private String getFirstKey(Map<String, Player> Map){
+        //Получаем первый элемент из Map
+        Map.Entry<String, Player> firstEntry = (Entry<String, Player>) Map.entrySet().iterator().next();
+        return firstEntry.getKey();
+    }
+
+    private String getNextKey(String key, Map<String, Player> Map){
+        for(Map.Entry<String, Player> entry : Map.entrySet()){
+            if(entry.getKey().equals(key)){
+                Map.Entry<String, Player> nextEntry = (Entry<String, Player>) Map.entrySet().iterator().next();
+                return nextEntry.getKey();
+            }
+        }
+        return "0";
     }
 }
