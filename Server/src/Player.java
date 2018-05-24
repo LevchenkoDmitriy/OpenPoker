@@ -40,6 +40,10 @@ public class Player {
         balance = balance - money;
     }
 
+    public void setDealer(boolean bool){
+        isDealer = bool;
+    }
+
     public Player() {
         name = "Player";
         balance = 1000;
