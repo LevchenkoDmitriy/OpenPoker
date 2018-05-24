@@ -30,6 +30,7 @@ public class Controller {
     private String portstr;
 
     private String gotin, sendout;
+    private boolean play=false;
 
     @FXML
     private void initialize() {
@@ -61,6 +62,7 @@ public class Controller {
                 if (! gotin.equals("connected")){
                     usr_name.setText(gotin);
                 }
+                else {play=true;}
             }
         }
         catch (IOException e){
@@ -69,22 +71,25 @@ public class Controller {
 
 
 
-        Parent SecondSceneParent = null;
-        try {
-            SecondSceneParent = FXMLLoader.load(getClass().getResource("desktop.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (play) {
+            Parent SecondSceneParent = null;
+            try {
+                SecondSceneParent = FXMLLoader.load(getClass().getResource("desktop.fxml"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            assert SecondSceneParent != null;
+            Scene SecondScene = new Scene(SecondSceneParent);
+
+            Stage window = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+            window.setScene(SecondScene);
+            window.show();
         }
 
-        assert SecondSceneParent != null;
-        Scene SecondScene = new Scene(SecondSceneParent);
+        while (play) {
 
-        Stage window = (Stage) ((Node)mouseEvent.getSource()).getScene().getWindow();
-        window.setScene(SecondScene);
-        window.show();
-
-
-
+        }
 
     }
 
