@@ -33,6 +33,10 @@ public class Controller {
     private boolean play=false;
     private Player[] players;
     private int myID;
+    private int ammo;
+    private int bank;
+    private int maxbet=100;
+    boolean able=false;
 
     @FXML
     private void initialize() {
@@ -93,6 +97,9 @@ public class Controller {
 
         //TODO: get players and understand what to do with them
 
+        // get ammo of players - ammo
+        //get array of structs Player - players
+
         //starting to play
         while (play) {
             try {
@@ -102,22 +109,40 @@ public class Controller {
                 gotin = in.readUTF();
                 comand = makecmd(gotin);
                 switch (comand){
-                    case "game started":
+                    case "game started":{
+
+                    }
 
                     case "your turn":{
+//блайнд на сервере?
+                        able=true;
 
                     }
                     case "bet":{
-                        defname(gotin);
+                        players[defplayer(defname(gotin))].betsum+=defvalue(gotin);
+                        players[defplayer(defname(gotin))].cash-=defvalue(gotin);
+                        maxbet=defvalue(gotin);
+
+                    }
+                    case "blind":{
+                        players[defplayer(defname(gotin))].betsum+=defvalue(gotin);
+                        players[defplayer(defname(gotin))].cash-=defvalue(gotin);
 
                     }
                     case "check":{
                         defname(gotin);
-
+                        //убрать подсветку?
 
                     }
                     case "fold":{
                         defname(gotin);
+                        //убрать карты
+
+
+                    }
+                    case "winner":{
+                        players[defplayer(defname(gotin))].cash+=defvalue(gotin);
+                        //показать анимацию?
 
 
                     }
@@ -131,6 +156,13 @@ public class Controller {
     }
 
 
+
+    private int defplayer (String name){
+        for (int i=0; i<ammo; ++i)
+            if (name.equals(players[i].name))
+                return i;
+        return -1;
+    }
 
     private String makecmd (String inp){
         int i=0;
@@ -205,14 +237,51 @@ public class Controller {
     }
 
     public void raise_act(ActionEvent actionEvent) {
+        if ((able)&(players[myID].cash>maxbet+50)){
+            able=false;
+            maxbet+=50;
+            try {
+                DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+                out.writeUTF("bet:"+String.valueOf(maxbet));
+            }catch (IOException e){
+                e.getStackTrace();
+            }
+        }
     }
 
     public void check_act(ActionEvent actionEvent) {
+        if (able){
+            able=false;
+            try {
+                DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+                out.writeUTF("check:-1");
+            }catch (IOException e){
+                e.getStackTrace();
+            }
+        }
     }
 
     public void fold_act(ActionEvent actionEvent) {
+        if (able){
+            able=false;
+            try {
+                DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+                out.writeUTF("fold:-1");
+            }catch (IOException e){
+                e.getStackTrace();
+            }
+        }
     }
 
     public void call_act(ActionEvent actionEvent) {
+        if ((able)&(players[myID].cash>maxbet)){
+            able=false;
+            try {
+                DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+                out.writeUTF("check:"+String.valueOf(maxbet));
+            }catch (IOException e){
+                e.getStackTrace();
+            }
+        }
     }
 }
