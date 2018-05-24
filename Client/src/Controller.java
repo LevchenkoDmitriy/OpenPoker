@@ -34,6 +34,7 @@ public class Controller {
     private Player[] players;
     private int myID;
     private int ammo;
+    private int bank;
     private int maxbet=100;
     boolean able=false;
 
@@ -136,6 +137,12 @@ public class Controller {
                     case "fold":{
                         defname(gotin);
                         //убрать карты
+
+
+                    }
+                    case "winner":{
+                        players[defplayer(defname(gotin))].cash+=defvalue(gotin);
+                        //показать анимацию?
 
 
                     }
