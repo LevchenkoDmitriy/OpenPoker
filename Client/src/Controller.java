@@ -1,4 +1,5 @@
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -117,4 +118,15 @@ public class Controller {
         return true;
     }
 
+    public void call_act(ActionEvent actionEvent) {
+    }
+
+    public void fold_act(ActionEvent actionEvent) {
+    }
+
+    public void check_act(ActionEvent actionEvent) {
+    }
+
+    public void raise_act(ActionEvent actionEvent) {
+    }
 }

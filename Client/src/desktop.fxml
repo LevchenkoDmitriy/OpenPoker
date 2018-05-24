@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #3EB489;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Desk">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #3EB489;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
        <Button fx:id="call" layoutX="456.0" layoutY="340.0" mnemonicParsing="false" onAction="#call_act" text="Call" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="200.0" />
        <Button fx:id="fold" layoutX="456.0" layoutY="297.0" mnemonicParsing="false" onAction="#fold_act" text="Fold" AnchorPane.bottomAnchor="150.0" AnchorPane.rightAnchor="200.0" />
